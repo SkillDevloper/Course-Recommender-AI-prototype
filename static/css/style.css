@@ -1,0 +1,283 @@
+/* Course Recommender AI - Custom Styles */
+
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3a0ca3;
+    --success-color: #4cc9f0;
+    --info-color: #4895ef;
+    --warning-color: #f72585;
+    --light-bg: #f8f9fa;
+    --dark-bg: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navigation */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--success-color) !important;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Progress Bars */
+.progress {
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+/* Badges */
+.badge {
+    border-radius: 20px;
+    font-weight: 500;
+    padding: 5px 12px;
+}
+
+/* Forms */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* List Groups */
+.list-group-item {
+    border: 1px solid #e9ecef;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Tables */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+/* Custom Components */
+.icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+.tech-card {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.tech-card:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+.tech-icon {
+    transition: transform 0.3s ease;
+}
+
+.tech-card:hover .tech-icon {
+    transform: scale(1.1);
+}
+
+/* Dashboard Stats */
+.stats-card {
+    border-left: 4px solid var(--primary-color);
+}
+
+.stats-card:nth-child(2) {
+    border-left-color: var(--success-color);
+}
+
+.stats-card:nth-child(3) {
+    border-left-color: var(--info-color);
+}
+
+.stats-card:nth-child(4) {
+    border-left-color: var(--warning-color);
+}
+
+/* Course Cards */
+.course-card {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .lead {
+        font-size: 1.1rem;
+    }
+    
+    .card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Utility Classes */
+.text-shadow {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.box-shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-lg {
+    border-radius: 15px;
+}
+
+/* Animation for results */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}

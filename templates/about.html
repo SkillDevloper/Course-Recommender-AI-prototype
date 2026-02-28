@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+
+{% block title %}About - Course Recommender AI{% endblock %}
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-5 fw-bold mb-4">
+            About Course Recommender AI
+        </h1>
+        <p class="lead text-muted">
+            An intelligent system that combines traditional keyword-based methods with 
+            modern neural approaches to provide comprehensive course recommendations.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+        <div class="card border-0 shadow-sm mb-5">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">
+                    <i class="fas fa-archway text-primary me-2"></i>System Architecture
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Frontend Layer</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>Flask Web Framework</strong> - Python backend server
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>Bootstrap 5</strong> - Responsive UI components
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>RESTful API</strong> - JSON-based communication
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>AJAX/Fetch API</strong> - Dynamic content loading
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Backend Layer</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>Flask-SQLAlchemy</strong> - Database ORM
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>SQLite Database</strong> - Data persistence
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>Joblib</strong> - Model serialization
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        <strong>Modular Design</strong> - Clean separation of concerns
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-sm mb-5">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">
+                    <i class="fas fa-database text-primary me-2"></i>Dataset Description
+                </h3>
+                <p>
+                    The system uses a curated dataset of 15 diverse courses across multiple 
+                    departments. Each course includes:
+                </p>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center p-3">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-book fa-2x text-primary"></i>
+                            </div>
+                            <h5>Course Title</h5>
+                            <p class="text-muted small">Descriptive course names</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center p-3">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-university fa-2x text-success"></i>
+                            </div>
+                            <h5>Department</h5>
+                            <p class="text-muted small">Academic department categorization</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center p-3">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-file-alt fa-2x text-info"></i>
+                            </div>
+                            <h5>Description</h5>
+                            <p class="text-muted small">Detailed course descriptions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    The dataset is extensible and can be easily replaced with real course catalogs 
+                    from educational institutions.
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-sm mb-5">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">
+                    <i class="fas fa-robot text-primary me-2"></i>ML Models Comparison
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-key me-2"></i>TF-IDF Model
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="text-primary">How It Works:</h6>
+                                <p class="small">
+                                    Term Frequency-Inverse Document Frequency (TF-IDF) calculates the 
+                                    importance of words in documents relative to a collection.
+                                </p>
+                                
+                                <h6 class="text-primary mt-3">Strengths:</h6>
+                                <ul class="small">
+                                    <li>Excellent for keyword matching</li>
+                                    <li>Fast computation</li>
+                                    <li>Interpretable results</li>
+                                    <li>Works well with technical terms</li>
+                                </ul>
+                                
+                                <h6 class="text-primary mt-3">Limitations:</h6>
+                                <ul class="small">
+                                    <li>No semantic understanding</li>
+                                    <li>Can't handle synonyms well</li>
+                                    <li>Word order doesn't matter</li>
+                                    <li>Limited context awareness</li>
+                                </ul>
+                                
+                                <div class="mt-3 p-3 bg-light rounded">
+                                    <small class="text-muted">
+                                        <i class="fas fa-lightbulb me-1"></i>
+                                        <strong>Best for:</strong> Queries with specific technical terms and keywords
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 border-success">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-brain me-2"></i>Neural Model
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="text-success">How It Works:</h6>
+                                <p class="small">
+                                    Uses Sentence-BERT (all-MiniLM-L6-v2) to create semantic embeddings 
+                                    and calculate cosine similarity between query and course descriptions.
+                                </p>
+                                
+                                <h6 class="text-success mt-3">Strengths:</h6>
+                                <ul class="small">
+                                    <li>Understands semantic meaning</li>
+                                    <li>Handles synonyms and paraphrasing</li>
+                                    <li>Captures context and relationships</li>
+                                    <li>Works with conceptual queries</li>
+                                </ul>
+                                
+                                <h6 class="text-success mt-3">Limitations:</h6>
+                                <ul class="small">
+                                    <li>Higher computational cost</li>
+                                    <li>Requires more training data</li>
+                                    <li>Less interpretable</li>
+                                    <li>Model size is larger</li>
+                                </ul>
+                                
+                                <div class="mt-3 p-3 bg-light rounded">
+                                    <small class="text-muted">
+                                        <i class="fas fa-lightbulb me-1"></i>
+                                        <strong>Best for:</strong> Natural language queries and conceptual understanding
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning mt-4">
+                    <i class="fas fa-balance-scale me-2"></i>
+                    <strong>Key Insight:</strong> The same query produces different results from each model 
+                    because they approach understanding from different perspectives - keywords vs semantics.
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">
+                    <i class="fas fa-tools text-primary me-2"></i>Tools & Technologies
+                </h3>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fab fa-python fa-3x text-primary"></i>
+                            </div>
+                            <h6>Python 3.10+</h6>
+                            <p class="small text-muted">Backend programming</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fas fa-flask fa-3x text-info"></i>
+                            </div>
+                            <h6>Flask</h6>
+                            <p class="small text-muted">Web framework</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fas fa-robot fa-3x text-success"></i>
+                            </div>
+                            <h6>Scikit-learn</h6>
+                            <p class="small text-muted">ML algorithms</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fas fa-project-diagram fa-3x text-warning"></i>
+                            </div>
+                            <h6>Transformers</h6>
+                            <p class="small text-muted">Neural embeddings</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-2">
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fas fa-database fa-3x text-secondary"></i>
+                            </div>
+                            <h6>SQLite</h6>
+                            <p class="small text-muted">Database</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fab fa-js-square fa-3x text-warning"></i>
+                            </div>
+                            <h6>JavaScript</h6>
+                            <p class="small text-muted">Frontend logic</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fab fa-bootstrap fa-3x text-purple"></i>
+                            </div>
+                            <h6>Bootstrap 5</h6>
+                            <p class="small text-muted">UI framework</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="tech-card text-center p-3">
+                            <div class="tech-icon mb-3">
+                                <i class="fas fa-cube fa-3x text-danger"></i>
+                            </div>
+                            <h6>Joblib</h6>
+                            <p class="small text-muted">Model persistence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-8 mx-auto text-center">
+        <div class="card border-0 bg-light">
+            <div class="card-body p-4">
+                <h4 class="fw-bold mb-3">Ready to Explore?</h4>
+                <p class="text-muted mb-4">
+                    Experience the difference between keyword-based and semantic understanding 
+                    with our dual-model recommendation system.
+                </p>
+                <a href="{{ url_for('main.recommend_page') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket me-2"></i>Try Recommendation System
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

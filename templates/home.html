@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Course Recommender AI{% endblock %}
+
+{% block content %}
+<div class="row align-items-center min-vh-75">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-4">
+            Intelligent Course Recommendations
+            <span class="text-primary">Powered by AI</span>
+        </h1>
+        <p class="lead mb-4">
+            Discover the perfect courses tailored to your learning goals using advanced 
+            machine learning models that understand both keywords and semantics.
+        </p>
+        <div class="row mb-5">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                                <i class="fas fa-key text-primary fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-0">TF-IDF Model</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Keyword-based matching that focuses on specific terms and phrases in your query.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                                <i class="fas fa-brain text-success fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Neural Model</h5>
+                        </div>
+                        <p class="card-text text-muted">
+                            Semantic understanding using embeddings to capture contextual meaning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <a href="{{ url_for('main.recommend_page') }}" class="btn btn-primary btn-lg px-4">
+                <i class="fas fa-rocket me-2"></i>Get Recommendations
+            </a>
+            <a href="{{ url_for('main.about') }}" class="btn btn-outline-primary btn-lg px-4">
+                <i class="fas fa-book me-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-lg">
+            <div class="card-body p-4">
+                <h4 class="card-title mb-4">
+                    <i class="fas fa-chart-bar text-primary me-2"></i>Model Comparison Demo
+                </h4>
+                <div class="mb-4">
+                    <h6>Example Query:</h6>
+                    <div class="alert alert-light border">
+                        <i class="fas fa-quote-left text-muted me-2"></i>
+                        "I want to learn Python for data science and machine learning"
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <i class="fas fa-key me-2"></i>TF-IDF Results
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Advanced Python for Data Science</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Machine Learning Fundamentals</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Data Analysis with SQL</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Statistics for Data Science</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <i class="fas fa-brain me-2"></i>Neural Results
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Deep Learning with TensorFlow</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Natural Language Processing</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Linear Algebra for ML</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Data Visualization with Tableau</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted small mt-3">
+                    <i class="fas fa-info-circle me-1"></i>
+                    The same query produces different results based on the model's approach to understanding your intent.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 pt-5">
+    <div class="col-12 text-center mb-5">
+        <h2 class="fw-bold">System Capabilities</h2>
+        <p class="lead text-muted">Advanced features for personalized learning</p>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+            <div class="icon-wrapper mb-3">
+                <i class="fas fa-language fa-3x text-primary"></i>
+            </div>
+            <h4>Natural Language Understanding</h4>
+            <p>Describe your learning goals in plain English, just like talking to an advisor.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+            <div class="icon-wrapper mb-3">
+                <i class="fas fa-balance-scale fa-3x text-success"></i>
+            </div>
+            <h4>Dual-Model Comparison</h4>
+            <p>Compare keyword-based vs semantic understanding to see different perspectives.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="text-center p-4">
+            <div class="icon-wrapper mb-3">
+                <i class="fas fa-history fa-3x text-info"></i>
+            </div>
+            <h4>Save & Track Searches</h4>
+            <p>Build your personalized learning roadmap with saved recommendations.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

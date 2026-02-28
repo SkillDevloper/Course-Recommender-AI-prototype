@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Course Recommender AI{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold mb-0">
+        <i class="fas fa-chart-line text-primary me-2"></i>Analytics Dashboard
+    </h1>
+    <div>
+        <button class="btn btn-outline-primary" onclick="refreshDashboard()">
+            <i class="fas fa-sync-alt me-2"></i>Refresh
+        </button>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-search text-primary fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0">{{ search_history|length }}</h4>
+                        <p class="text-muted mb-0">Total Searches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-bookmark text-success fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0">
+                            {% set total_saves = 0 %}
+                            {% for search_id, data in saved_recommendations.items() %}
+                                {% set total_saves = total_saves + data.recommendations|length %}
+                            {% endfor %}
+                            {{ total_saves }}
+                        </h4>
+                        <p class="text-muted mb-0">Saved Courses</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-key text-info fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0">
+                            {% set tfidf_count = search_history|selectattr('model_type', 'equalto', 'tfidf')|list|length %}
+                            {{ tfidf_count }}
+                        </h4>
+                        <p class="text-muted mb-0">TF-IDF Searches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="fas fa-brain text-warning fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0">
+                            {% set neural_count = search_history|selectattr('model_type', 'equalto', 'neural')|list|length %}
+                            {{ neural_count }}
+                        </h4>
+                        <p class="text-muted mb-0">Neural Searches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-history me-2"></i>Recent Search History
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Query</th>
+                                <th>Model</th>
+                                <th>Results</th>
+                                <th>Timestamp</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for search in search_history %}
+                            <tr>
+                                <td>
+                                    <small class="text-truncate" style="max-width: 200px;" 
+                                           data-bs-toggle="tooltip" title="{{ search.query }}">
+                                        {{ search.query[:50] }}{% if search.query|length > 50 %}...{% endif %}
+                                    </small>
+                                </td>
+                                <td>
+                                    {% if search.model_type == 'tfidf' %}
+                                        <span class="badge bg-primary">
+                                            <i class="fas fa-key me-1"></i>TF-IDF
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-brain me-1"></i>Neural
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% set results = search.results|fromjson %}
+                                    <span class="badge bg-info">{{ results|length }}</span>
+                                </td>
+                                <td>
+                                    <small class="text-muted">
+                                        {{ search.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                                    </small>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" 
+                                            onclick="compareSearch('{{ search.query }}')">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <i class="fas fa-search fa-2x text-muted mb-3"></i>
+                                    <p class="text-muted">No search history yet</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>Model Usage Distribution
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center py-3">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-center mb-2">
+                            <div class="mx-2">
+                                <span class="d-inline-block rounded-circle bg-primary p-2 me-1"></span>
+                                <small>TF-IDF: {{ tfidf_count }}</small>
+                            </div>
+                            <div class="mx-2">
+                                <span class="d-inline-block rounded-circle bg-success p-2 me-1"></span>
+                                <small>Neural: {{ neural_count }}</small>
+                            </div>
+                        </div>
+                        <div class="progress" style="height: 20px;">
+                            {% if search_history|length > 0 %}
+                                {% set tfidf_percent = (tfidf_count / search_history|length * 100)|round|int %}
+                                {% set neural_percent = 100 - tfidf_percent %}
+                            {% else %}
+                                {% set tfidf_percent = 0 %}
+                                {% set neural_percent = 0 %}
+                            {% endif %}
+                            <div class="progress-bar bg-primary" style="width: {{ tfidf_percent }}%">
+                                {{ tfidf_percent }}%
+                            </div>
+                            <div class="progress-bar bg-success" style="width: {{ neural_percent }}%">
+                                {{ neural_percent }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-bookmark me-2"></i>Saved Recommendations
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if saved_recommendations %}
+                    {% for search_id, data in saved_recommendations.items() %}
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0">
+                                <i class="fas fa-search me-2"></i>
+                                "{{ data.search.query[:50] }}{% if data.search.query|length > 50 %}...{% endif %}"
+                            </h6>
+                            <small class="text-muted">
+                                {{ data.search.timestamp[:10] }} | 
+                                {% if data.search.model_type == 'tfidf' %}
+                                    <span class="badge bg-primary">TF-IDF</span>
+                                {% else %}
+                                    <span class="badge bg-success">Neural</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="row">
+                            {% for rec in data.recommendations %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card border">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title mb-0">{{ rec.course_title }}</h6>
+                                            <span class="badge bg-secondary">{{ rec.course_department }}</span>
+                                        </div>
+                                        <p class="card-text small text-muted">
+                                            {{ rec.course_description[:100] }}...
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="w-75">
+                                                <div class="progress" style="height: 8px;">
+                                                    <div class="progress-bar bg-success" 
+                                                         style="width: {{ rec.relevance_score }}%"></div>
+                                                </div>
+                                                <small class="text-muted">Relevance: {{ "%.1f"|format(rec.relevance_score) }}%</small>
+                                            </div>
+                                            <small class="text-muted">ID: {{ rec.course_id }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if not loop.last %}<hr>{% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-bookmark fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No Saved Recommendations</h5>
+                        <p class="text-muted">Save courses from the recommendations page to see them here.</p>
+                        <a href="{{ url_for('main.recommend_page') }}" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Get Recommendations
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Modal -->
+<div class="modal fade" id="comparisonModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-balance-scale me-2"></i>Model Comparison
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="comparisonContent">
+                    <!-- Content loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function refreshDashboard() {
+    window.location.reload();
+}
+
+function compareSearch(query) {
+    fetch(`/api/compare/${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const modal = new bootstrap.Modal(document.getElementById('comparisonModal'));
+                const content = document.getElementById('comparisonContent');
+                
+                let html = `
+                    <div class="mb-4">
+                        <div class="alert alert-light">
+                            <i class="fas fa-quote-left me-2"></i>
+                            "${data.query}"
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="text-primary">${data.comparison.common_courses}</h3>
+                                    <p class="text-muted small mb-0">Common Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="text-info">${data.comparison.tfidf_only}</h3>
+                                    <p class="text-muted small mb-0">TF-IDF Only</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="text-success">${data.comparison.neural_only}</h3>
+                                    <p class="text-muted small mb-0">Neural Only</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3>${data.tfidf.count + data.neural.count}</h3>
+                                    <p class="text-muted small mb-0">Total Results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-key text-primary me-2"></i>TF-IDF Results (${data.tfidf.count})</h6>
+                            <div class="list-group">
+                `;
+                
+                data.tfidf.results.forEach(course => {
+                    html += `
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <strong>${course.title}</strong>
+                                <span class="badge bg-primary">${course.relevance_score.toFixed(1)}%</span>
+                            </div>
+                            <small class="text-muted">${course.department}</small>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-brain text-success me-2"></i>Neural Results (${data.neural.count})</h6>
+                            <div class="list-group">
+                `;
+                
+                data.neural.results.forEach(course => {
+                    html += `
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <strong>${course.title}</strong>
+                                <span class="badge bg-success">${course.relevance_score.toFixed(1)}%</span>
+                            </div>
+                            <small class="text-muted">${course.department}</small>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                content.innerHTML = html;
+                modal.show();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error loading comparison data');
+        });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Get Recommendations - Course Recommender AI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-sliders-h me-2"></i>Recommendation Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="recommendationForm">
+                    <div class="mb-4">
+                        <label for="queryInput" class="form-label fw-bold">
+                            <i class="fas fa-comment-dots me-1"></i>Describe Your Learning Goals
+                        </label>
+                        <textarea 
+                            class="form-control" 
+                            id="queryInput" 
+                            rows="5" 
+                            placeholder="Example: I want to learn Python for data science and machine learning with practical projects..."
+                            required></textarea>
+                        <div class="form-text">
+                            Be specific about topics, skills, or projects you're interested in.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-robot me-1"></i>Select Recommendation Model
+                        </label>
+                        <div class="list-group">
+                            <label class="list-group-item d-flex gap-3">
+                                <input class="form-check-input flex-shrink-0" 
+                                       type="radio" 
+                                       name="modelType" 
+                                       value="tfidf" 
+                                       checked>
+                                <div>
+                                    <h6 class="mb-1">TF-IDF Model</h6>
+                                    <p class="mb-1 small text-muted">
+                                        <i class="fas fa-key fa-xs me-1"></i>
+                                        Keyword-focused matching. Best for specific technical terms.
+                                    </p>
+                                </div>
+                            </label>
+                            <label class="list-group-item d-flex gap-3">
+                                <input class="form-check-input flex-shrink-0" 
+                                       type="radio" 
+                                       name="modelType" 
+                                       value="neural">
+                                <div>
+                                    <h6 class="mb-1">Neural Model</h6>
+                                    <p class="mb-1 small text-muted">
+                                        <i class="fas fa-brain fa-xs me-1"></i>
+                                        Semantic understanding. Best for conceptual queries.
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100" id="getRecommendationsBtn">
+                        <i class="fas fa-search me-2"></i>Get Recommendations
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>Tips for Better Results
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Be specific:</strong> Mention technologies, topics, or skills
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Include goals:</strong> "I want to build..." or "I need to learn..."
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Try different models:</strong> Compare TF-IDF vs Neural results
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>Save interesting courses:</strong> Build your learning roadmap
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0">
+                    <i class="fas fa-list-ul me-2"></i>Recommended Courses
+                    <span class="badge bg-primary ms-2" id="resultsCount">0</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Loading State -->
+                <div id="loadingState" class="text-center py-5" style="display: none;">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted">Analyzing your query and finding the best courses...</p>
+                </div>
+                
+                <!-- Results Container -->
+                <div id="resultsContainer">
+                    <div class="text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Recommendations Yet</h4>
+                        <p class="text-muted">Enter your learning goals and select a model to get started.</p>
+                    </div>
+                </div>
+                
+                <!-- Search Info -->
+                <div id="searchInfo" class="mt-4" style="display: none;">
+                    <div class="alert alert-light border">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-clock me-1"></i>
+                                    Search ID: <span id="currentSearchId">-</span>
+                                </small>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <small class="text-muted">
+                                    Model: <span id="currentModelType" class="badge bg-primary">-</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>Model Performance Insights
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>TF-IDF Model</h6>
+                                <ul class="small text-muted mb-0">
+                                    <li>Uses keyword frequency and importance</li>
+                                    <li>Best for technical term matching</li>
+                                    <li>Faster computation</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Neural Model</h6>
+                                <ul class="small text-muted mb-0">
+                                    <li>Understands semantic meaning</li>
+                                    <li>Better for conceptual queries</li>
+                                    <li>Captures context and relationships</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/recommend.js') }}"></script>
+{% endblock %}
