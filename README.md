@@ -11,10 +11,10 @@ An intelligent course recommendation system that compares TF-IDF (keyword-based)
 - **Production-ready**: Clean, modular code with proper error handling
 
 ## Screenshots
-![Home]()
-![About]()
-![Dashboard]()
-![Recommendation]()
+![Home](https://github.com/SkillDevloper/Course-Recommender-AI-prototype/blob/main/Screenshots/Home%20Page.png)
+![About](https://github.com/SkillDevloper/Course-Recommender-AI-prototype/blob/main/Screenshots/About%20Page.png)
+![Dashboard](https://github.com/SkillDevloper/Course-Recommender-AI-prototype/blob/main/Screenshots/Dashboard%20Page.png)
+![Recommendation](https://github.com/SkillDevloper/Course-Recommender-AI-prototype/blob/main/Screenshots/Recommendation%20Page.png)
 
 ## 🏗️ Architecture
 
